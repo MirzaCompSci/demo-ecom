@@ -4,6 +4,7 @@
   "description": "First Node and React to heroku",
   "main": "index.js",
   "scripts": {
+    "heroki-postbuild":"cd client && npm install && npm install --only=dev --no-shrinkwrap && npm run build",
     "start": "node app.js"
   },
   "author": "",
