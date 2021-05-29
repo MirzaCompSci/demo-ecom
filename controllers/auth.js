@@ -59,7 +59,7 @@ module.exports.signout = (req,res) => {
 };
 
 exports.requireSignin = expressJwt({
-    secret: process.env.JWT_SECRET,
+    secret: "qwerty",
     algorithms: ["HS256"], // added later
     userProperty: "auth",
   });
