@@ -26,12 +26,27 @@ mongoose.connect(process.env.MONGO_URI,{
    useUnifiedTopology: true
 }).then(()=> {console.log("DB connected")});
 
+// ** MIDDLEWARE ** //
+const whitelist = ['http://localhost:3000', 'http://localhost:8080', 'https://demo-ecoms.herokuapp.com/']
+const corsOptions = {
+  origin: function (origin, callback) {
+    console.log("** Origin of request " + origin)
+    if (whitelist.indexOf(origin) !== -1 || !origin) {
+      console.log("Origin acceptable")
+      callback(null, true)
+    } else {
+      console.log("Origin rejected")
+      callback(new Error('Not allowed by CORS'))
+    }
+  }
+}
+
 //middleware
 app.use(morgan('dev'))
 app.use(bodyParser.json())
 app.use(cookieParser())
 app.use(expressValidator())
-app.use(cors())
+app.use(cors(corsOptions))
 
 // routes middleware
 app.use("/api",authRoutes)
